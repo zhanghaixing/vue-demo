@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul,li,ol{
+			list-style: none;
+		}
+		#app{
+			width: 600px;
+			height: 300px;
+			border: 1px solid #000;
+		}
+		h1{
+			margin: 0 auto;
+		}
+		#app ul >li{
+			margin-bottom: 10px;
+		}
+		#app ul>li>span:nth-child(1){
+			display:block;
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			border: 1px solid #000;
+			float: left;
+		}
+		.checkall{
+			display:block;
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			border: 1px solid #000;
+			float: left;
+		}
+		#app ul>li>span:nth-child(2){
+			margin-left: 20px;
+		}
+		.totalModel>span:nth-child(2){
+			margin-left: 20px;
+		}
+		.active{
+			background:red;
+		}
+		.totalModel{
+			width: 800px;
+			height: 50px;
+		}
+		.reduce,.add{
+			width: 10px;
+			height: 10px;
+			border: 1px solid #000;
+		}
+	</style>
+	<script type="text/javascript"  src="js/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<!-- <h1>购物车Demo测试</h1> -->
+		<ul>
+			<li v-for="(item,index) in goodsList">
+				<span v-bind:class="{ active:item.isCheck }"  @click = "isCheck(item)"></span>
+				<span class = "infoList">{{item.name}}</span>
+				<span class = "infoList">{{item.infomation}}</span>
+				<span class="price">单价<b> {{item.price | formatMony(item)}}</b></span>
+				<span class="cumputedModel">
+					<sapn class="reduce" @click = "computed(item,-1)">-</sapn>
+					<input type="" v-model = "item.count" v-on:keyup="filter($event,item)">
+					<span class = "add" @click = "computed(item,1)">+</span>
+				</span>
+				<span class = "subTotal" > 小计<b>{{item.price * item.count}}</b></span>
+				<span class="remove" @click = "removeItem(index)">删除</span>
+			</li>
+		</ul>
+
+		<div class="totalModel">
+			<span class="checkall" v-bind:class="{ active:isCheckAll}" @click="checkall"></span>
+			<span style= "margin-right: 50px">全选</span>
+			<span @click = "recovery">恢复删除记录</span>
+			<span style= "margin-left:75px">合计：<b>{{totalMoney}}</b></span> 
+		</div>
+	</div>
+	<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
